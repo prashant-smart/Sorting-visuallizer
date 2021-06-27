@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Let Me Sort</title>
+    <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"
+      integrity="sha512-VCHVc5miKoln972iJPvkQrUYYq7XpxXzvqNfiul1H4aZDwGBGC0lq373KNleaB2LpnC2a/iNfE5zoRYmB4TRDQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+
+  <body>
+    <header>
+      <div class="dropdown">
+        <ul id="dropdown_sortings">
+          <li id="sortings_opt">
+            Sorting Algorithms<i class="fa fa-caret-down"></i>
+          </li>
+          <li>
+            <ul id="all_sortings">
+              <li class="Bubble sort" onclick="bubbleSort(0,0);">
+                Bubble Sort
+              </li>
+              <hr />
+              <li class="Merge sort" onclick="MergeSort(array,0,array_size-1)">Merge Sort</li>
+            </ul>
+          </li>
+        </ul>
+
+        <div id="hover">
+          <li id="bubbleSort">Bubble Sort</li>
+          <br />
+          <hr />
+          <li id="MergeSort">Merge Sort</li>
+        </div>
+      </div>
+      <h1 id="heading">Let Me Sort</h1>
+    </header>
+    <br />
+    <hr />
+    <div class="main">
+      <form class="check">
+        <div class="radio">
+          <span>Bar</span>
+          <input type="radio" id="bar" name="type" checked />
+        </div>
+        <div class="radio">
+          <span>PolarArea</span>
+          <input type="radio" id="polarArea" name="type" />
+        </div>
+      </form>
+      <canvas id="myChart"></canvas>
+    </div>
+    <div id="mid_sec">
+      <button class="btn" onclick="both_func(array_size,array)">
+        Randomize
+      </button>
+      <div class="slider">
+        <div class="element">
+          <span>Number of Elements</span>
+          <div class="slider_container">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              class="slider_sec"
+              id="numberOfElements_slider"
+            />
+            <div class="Slider_hover" id="Number_of_element_hover">
+              <span class="indicator_of_slider indicator_of_element">50</span>
+            </div>
+          </div>
+        </div>
+        <div class="speed">
+          <span>Speed</span>
+          <div class="slider_container">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              class="slider_sec"
+              id="speed_slider"
+            />
+            <div class="Slider_hover" id="speed_hover">
+              <span
+                class="indicator_of_slider indicator_of_speed"
+                style="left: 19%"
+                >50%</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="indicator">
+      <div class="color_idicator">
+        <div id="green"></div>
+        Sorted
+      </div>
+      <div class="color_idicator">
+        <div id="yellow"></div>
+        Comparing
+      </div>
+      <div class="color_idicator">
+        <div id="red"></div>
+        Swaping
+      </div>
+      <div class="color_idicator">
+        <div id="pink"></div>
+        Not Sorted
+      </div>
+    </div>
+    <article>
+     
+    </article>
+  </body>
+  <script>
+    var ctx = document.getElementById("myChart").getContext("2d");
+    let btn = document.getElementsByClassName("btn");
+    let array_size = 50;
+    let array = [];
+    let min = 1;
+    let max = 100;
+
+    // color array
+    let green = [];
+    let yellow = [];
+    let red = [];
+
+    // clear all array;
+    let startAgain = () => {
+      update_color(red, "rgb(111,99,236,0.5)");
+      update_color(green, "rgb(111,99,236,0.5)");
+      update_color(yellow, "rgb(111,99,236,0.5)");
+      clear(green);
+      clear(red);
+      clear(yellow);
+    };
+
+    let randomize = (array_size, array) => {
+      for (let i = 0; i < array_size; i++) {
+        array[i] = Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    };
+
+    randomize(array_size, array);
+
+    function getData() {
+      return {
+        labels: array.map((elm) => {
+          return `${elm}`;
+        }),
+        datasets: [
+          {
+            label: [],
+            data: array,
+            backgroundColor: array.map((elm) => {
+              return "rgba(111,99,236,0.5)";
+            }),
+            borderWidth: 2,
+          },
+        ],
+      };
+    }
+
+    var chartOptions = {
+      legend: {
+        display: false,
+      },
+      scales: {
+        X: {},
+        y: {
+          display: false,
+        },
+      },
+    };
+
+    var myChart = new Chart(ctx, {
+      type: "bar",
+      data: getData(),
+      options: chartOptions,
+    });
+
+    // color coding algo
+
+    let update_color = (arr, color) => {
+      arr.forEach((elm) => {
+        myChart.data.datasets[0].backgroundColor[elm] = color;
+      });
+
+      myChart.update();
+    };
+    // total update function
+    let update = (array) => {
+      myChart.data.labels = array.map((elm) => {
+        return `${elm}`;
+      });
+      myChart.data.datasets[0].data = array;
+      myChart.update();
+    };
+    // empty array
+    let empty = [];
+    for (var i = 0; i < array_size; i++) empty.push(i);
+
+    let both_func = (array_size, array) => {
+      ischange = true;
+
+      randomize(array_size, array);
+      update(array);
+      startAgain();
+      update_color(empty, "rgb(111,99,236,0.5)");
+    };
+    // swapping algo
+    let swap = (a, b) => {
+      let temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
+    };
+    // clear function
+    let clear = (array) => {
+      for (var i = 0; i <= array.length; i++) {
+        array.pop();
+      }
+    };
+
+    let bar = document.getElementById("bar");
+    let polar = document.getElementById("polarArea");
+    bar.addEventListener("click", () => {
+      myChart.destroy();
+      myChart = new Chart(ctx, {
+        type: "bar",
+        data: getData(),
+        options: chartOptions,
+      });
+      // myChart.update();
+    });
+
+    polar.addEventListener("click", () => {
+      myChart.destroy();
+      myChart = new Chart(ctx, {
+        type: "polarArea",
+        data: getData(),
+        options: {
+          legend: {
+            display: false,
+          },
+          scales: {
+            X: {},
+            y: {
+              display: false,
+            },
+          },
+        },
+      });
+    });
+
+    //article element 
+    let article = document.getElementsByTagName("article")[0];
+    let isArticle=false;
+    
+    // To return for sorting algo
+    let ischange = false;
+  </script>
+  <script src="index.js"></script>
+  <script src="sorting algorithms/bubble_sort.js"></script>
+  <script src="sorting algorithms/MergeSort.js"></script>
+</html>
