@@ -57,6 +57,10 @@
           <input type="radio" id="bar" name="type" checked />
         </div>
         <div class="radio">
+          <span>Line</span>
+          <input type="radio" id="line" name="type" />
+        </div>
+        <div class="radio">
           <span>PolarArea</span>
           <input type="radio" id="polarArea" name="type" />
         </div>
@@ -188,7 +192,7 @@
     };
 
     var myChart = new Chart(ctx, {
-      type: "bar",
+      type: "pie",
       data: getData(),
       options: chartOptions,
     });
@@ -237,6 +241,7 @@
 
     let bar = document.getElementById("bar");
     let polar = document.getElementById("polarArea");
+    let line = document.getElementById("line");
     bar.addEventListener("click", () => {
       myChart.destroy();
       myChart = new Chart(ctx, {
@@ -263,6 +268,14 @@
             },
           },
         },
+      });
+    });
+    line.addEventListener("click", () => {
+      myChart.destroy();
+      myChart = new Chart(ctx, {
+        type: "line",
+        data: getData(),
+        options: chartOptions,
       });
     });
 
