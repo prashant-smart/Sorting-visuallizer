@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+    
+    
+}
+body {
+    overflow-x: hidden;
+}
+
+#myChart{
+    margin: auto;
+    width: 72vw!important;
+    height: 68vh!important;
+}
+#heading{
+    margin-top:1rem;
+    text-align: center ;
+    margin:auto; 
+}
+#h2{
+    margin-top:1rem;
+    text-align: center  
+}
+#hover{
+    display:none;
+    height:12vh;
+    width: 10vw;
+    margin-top: 4vh;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    cursor: pointer
+    
+}
+#h2:hover #hover{ 
+    display: block;
+}
+
+li{
+   cursor: pointer; 
+    text-align: center;
+    list-style: none;
+    
+}
+li:hover{
+    color:blueviolet;
+}
+.sort:hover{
+    color:red;
+}
+
+
+.color_idicator{
+    font-size:20px;
+}
+#yellow{
+    height:1rem;
+    width:1rem;
+    background-color: yellow;
+    margin-top: 12px;
+    margin-right: 1rem;
+}
+#green{
+    height:1rem;
+    width:1rem;
+    background-color: green;
+    margin-top: 12px;
+    margin-right: 1rem;
+}
+#red{
+    height:1rem;
+    width:1rem;
+    background-color: red;
+    margin-top: 12px;
+    margin-right: 1rem;
+}
+#pink{
+    height:1rem;
+    width:1rem;
+    background-color: rgb(111,99,236,0.5);
+    margin-top: 12px;
+    margin-right: 1rem;
+}
+
+
+.slider_sec{
+    margin-top: 22px!important;
+    width: 12rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.Slider_hover{
+    display: none;
+}
+.speed:hover .Slider_hover,.element:hover .Slider_hover{
+    display: inline;
+    height: 2.5rem;
+    font-size:small;
+    width: 2.5rem;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-18px,-23px);
+    border: solid 1px;
+    background: linear-gradient( 
+        90deg
+        , #a7b4e4 0%, #3d62e5 100%);
+        color: white;
+        left: 50%;
+}
+.slider_container{
+    display: inline-block;
+    position: relative;
+}
+#speed_hover,.element{
+    text-align: center;
+    font-size:small;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .btn_con {
+        font-display: flex;
+     flex-wrap: wrap;
+    }
+  }

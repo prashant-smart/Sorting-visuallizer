@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Let Me Sort</title>
+    <link rel="stylesheet" href="index.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"
+      integrity="sha512-VCHVc5miKoln972iJPvkQrUYYq7XpxXzvqNfiul1H4aZDwGBGC0lq373KNleaB2LpnC2a/iNfE5zoRYmB4TRDQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Let Me Sort</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link active dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Sorting Algorithms
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" onclick="bubbleSort(0,0)" href="#"
+                    >Bubble Sort</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    onclick="Seclection_sort(array,0,1,0)"
+                    href="#"
+                    >Selection Sort</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    onclick="quickSort(array,0,array.length-1)"
+                    href="#"
+                    >Qucik Sort</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    onclick="MergeSort(array,0,array.length-1)"
+                    href="#"
+                    >Merge Sort</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <label id="container customArrayText mx-2">Custom Array</label>
+            <input
+              class="form-control me-2 customArrayInput"
+              type="search"
+              placeholder="eg: 1,2,3,4"
+              aria-label="Search"
+            />
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container d-flex justify-content-between">
+      <form class=" h-25 my-5 d-flex flex-column">
+        <div class="radio">
+          <span>Bar</span>
+          <input class="my-2 mx-2" type="radio" id="bar" name="type" checked />
+        </div>
+        <div class="radio">
+          <span>Line</span>
+          <input class="my-2 mx-2" type="radio" id="line" name="type" />
+        </div>
+        <div class="radio">
+          <span>PolarArea</span>
+          <input class="my-2 mx-2" type="radio" id="polarArea" name="type" />
+        </div>
+      </form>
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <div
+      class="container d-flex btn_con justify-content-around my-4"
+      id="mid_sec"
+    >
+      <div class="container btn_con my-3">
+        <button
+          class="btn btn-outline-dark btn-lg "
+          onclick="both_func(array_size,array)"
+        >
+          Randomize
+        </button>
+      </div>
+      <div class="container d-flex flex-wrap justify-content-around">
+        <div class="element">
+          <div style="font-size:large">Number of Elements</div>
+          <div class="slider_container">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              class="slider_sec"
+              id="numberOfElements_slider"
+            />
+            <div class="Slider_hover" id="Number_of_element_hover">
+              <span class="indicator_of_slider indicator_of_element">50</span>
+            </div>
+          </div>
+        </div>
+        <div class="speed">
+          <div style="font-size:large">Speed</div>
+          <div class="slider_container">
+            <input
+              type="range"
+              min="0"
+              max="100"
+              class="slider_sec"
+              id="speed_slider"
+            />
+            <div class="Slider_hover" id="speed_hover">
+              <span
+                class="indicator_of_slider indicator_of_speed "
+                >50%</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-flex justify-content-around flex-wrap indicator">
+      <div class="d-flex color_idicator">
+        <div id="green"></div>
+        <div>Sorted</div>
+      </div>
+      <div class="d-flex color_idicator">
+        <div id="yellow"></div>
+        Comparing
+      </div>
+      <div class="d-flex color_idicator">
+        <div id="red"></div>
+        Swaping
+      </div>
+      <div class="d-flex color_idicator">
+        <div id="pink"></div>
+        Not Sorted
+      </div>
+    </div>
+    <article class="d-flex flex-wrap article">
+      
+    </article>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+  <script>
+    var ctx = document.getElementById("myChart").getContext("2d");
+    let btn = document.getElementsByClassName("btn");
+    let array_size = 50;
+    let array = [];
+    let min = 1;
+    let max = 100;
+
+      //article element
+      let article = document.getElementsByTagName("article")[0];
+
+    //sleep fucntion
+    let sleep = (ms) => {
+      return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+      });
+    };
+
+    // color array
+    let green = [];
+    let yellow = [];
+    let red = [];
+
+    // clear all array;
+    let startAgain = () => {
+      update_color(red, "rgb(111,99,236,0.5)");
+      update_color(green, "rgb(111,99,236,0.5)");
+      update_color(yellow, "rgb(111,99,236,0.5)");
+      clear(green);
+      clear(red);
+      clear(yellow);
+    };
+
+    let randomize = (array_size, array) => {
+      for (let i = 0; i < array_size; i++) {
+        array[i] = Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    };
+
+    randomize(array_size, array);
+
+    function getData() {
+      return {
+        labels: array.map((elm) => {
+          return `${elm}`;
+        }),
+        datasets: [
+          {
+            label: [],
+            data: array,
+            backgroundColor: array.map((elm) => {
+              return "rgba(111,99,236,0.5)";
+            }),
+            borderWidth: 2,
+          },
+        ],
+      };
+    }
+
+    var chartOptions = {
+      legend: {
+        display: false,
+      },
+      scales: {
+        X: {},
+        y: {
+          display: false,
+        },
+      },
+    };
+
+    var myChart = new Chart(ctx, {
+      type: "bar",
+      data: getData(),
+      options: chartOptions,
+    });
+
+    // color coding algo
+
+    let update_color = (arr, color) => {
+      arr.forEach((elm) => {
+        myChart.data.datasets[0].backgroundColor[elm] = color;
+      });
+
+      myChart.update();
+    };
+    // total update function
+    let update = (array) => {
+      myChart.data.labels = array.map((elm) => {
+        return `${elm}`;
+      });
+      myChart.data.datasets[0].data = array;
+      myChart.update();
+    };
+    // empty array
+    let empty = [];
+    let create_empty = () => {
+      for (var i = 0; i < array_size; i++) empty.push(i);
+    };
+
+    // To reset all the color array
+    let resetColor = (red, yellow, green) => {
+      while (green.length) {
+        green.pop();
+      }
+      while (red.length) {
+        red.pop();
+      }
+      while (yellow.length) {
+        yellow.pop();
+      }
+    };
+    let both_func = (array_size, array) => {
+      article.innerHTML="";
+      randomize(array_size, array);
+      update(array);
+      startAgain();
+      create_empty();
+      update_color(empty, "rgb(111,99,236,0.5)");
+      resetColor(red, yellow, green);
+
+      //setTimeout
+      const highestId = window.setTimeout(() => {
+        for (let i = highestId; i >= 0; i--) {
+          window.clearInterval(i);
+        }
+      }, 0);
+    };
+
+    // swapping algo
+    let swap = (a, b) => {
+      let temp = array[a];
+      array[a] = array[b];
+      array[b] = temp;
+    };
+    // clear function
+    let clear = (array) => {
+      for (var i = 0; i <= array.length; i++) {
+        array.pop();
+      }
+    };
+
+    let bar = document.getElementById("bar");
+    let polar = document.getElementById("polarArea");
+    let line = document.getElementById("line");
+    bar.addEventListener("click", () => {
+      myChart.destroy();
+      myChart = new Chart(ctx, {
+        type: "bar",
+        data: getData(),
+        options: chartOptions,
+      });
+      // myChart.update();
+    });
+
+    polar.addEventListener("click", () => {
+      myChart.destroy();
+      myChart = new Chart(ctx, {
+        type: "polarArea",
+        data: getData(),
+        options: {
+          legend: {
+            display: false,
+          },
+          scales: {
+            X: {},
+            y: {
+              display: false,
+            },
+          },
+        },
+      });
+    });
+    line.addEventListener("click", () => {
+      myChart.destroy();
+      myChart = new Chart(ctx, {
+        type: "line",
+        data: getData(),
+        options: chartOptions,
+      });
+    });
+
+  
+
+    // // To return for sorting algo
+  </script>
+  <script src="index.js"></script>
+  <script src="sorting algorithms/bubble_sort.js"></script>
+  <script src="sorting algorithms/quick_Sort.js"></script>
+  <script src="sorting algorithms/selction_sort.js"></script>
+  <script src="sorting algorithms/MergeSort.js"></script>
+  <script src="component/customArray.js"></script>
+</html>
